@@ -2,6 +2,7 @@ const ALLOWED_PREFIXES = [
   "https://www.sec.gov/",
   "https://data.sec.gov/",
   "https://efts.sec.gov/",
+  "https://api.anthropic.com/",
 ];
 
 const CORS = {
@@ -29,10 +30,10 @@ export default {
 
     try {
       const upstream = await fetch(target, {
-        headers: {
-          "User-Agent": "Mozilla/5.0 (compatible; 10K-Analyzer/1.0)",
-          "Accept": "application/json, text/html, */*",
-        },
+        method: request.method,
+        headers: request.headers,
+        body: request.method !== 'GET' ? request.body : undefined,
+        });
       });
 
       const body = await upstream.arrayBuffer();
