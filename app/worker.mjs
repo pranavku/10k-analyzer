@@ -1,4 +1,3 @@
-
 const HTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -239,7 +238,8 @@ async function getMDAText(cik,accession) {
 async function runNLP(mdaText,ticker) {
   const prompt = 'You are a financial analyst. Analyze this 10-K MD&A excerpt for '+ticker+'. Return ONLY valid JSON, no markdown, no code fences:\n{"summary":"2-3 sentence summary","signals":{"goingConcern":false,"materialWeakness":false,"auditorChange":false,"restatement":false,"investigationLang":false,"litigationSpike":false,"newRiskFactors":false,"segmentChange":false,"comp":false},"riskTags":["tag1"],"sentiment":"positive","confidence":0.8}\n\nMD&A:\n'+mdaText.slice(0,4000);
   try {
-const resp = await fetch('https://sec-edgar-proxy.pranav33.workers.dev/?url=' + encodeURIComponent('https://api.anthropic.com/v1/messages'),{      method:'POST',
+    const resp = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:800,messages:[{role:'user',content:prompt}]})
     });
