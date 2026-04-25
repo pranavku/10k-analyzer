@@ -5,6 +5,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   deploy-proxy:
     name: Deploy SEC EDGAR proxy
@@ -13,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
       - name: Deploy proxy Worker
         working-directory: proxy
         run: npx wrangler deploy
@@ -29,7 +32,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
       - name: Deploy app Worker
         working-directory: app
         run: npx wrangler deploy
